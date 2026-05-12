@@ -3,154 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Work Permit Verification</title>
+    <title>Work Permit Verification Portal</title>
     <style>
-        /* ডিজাইন: আপনার দেওয়া স্ক্রিনশটের মতো লুক */
+        /* CSS for Professional Look */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f39c12; /* কমলা রঙের ব্যাকগ্রাউন্ড */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
+            padding: 0;
+            background: #f4f7f6;
+            color: #333;
+        }
+
+        /* Top Header Navigation */
+        header {
+            background-color: #8d5d0a; /* Brownish like the example */
+            color: white;
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .logo { font-size: 24px; font-weight: bold; }
+        nav a { color: white; text-decoration: none; margin-left: 20px; font-weight: 500; }
+
+        /* Banner Section */
+        .banner {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1521295121812-327341e3d30b?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             color: white;
             text-align: center;
         }
 
-        header {
-            background-color: #7e5109;
-            padding: 20px;
-            font-size: 24px;
-            font-weight: bold;
-        }
+        .banner h1 { font-size: 40px; margin: 0; text-transform: uppercase; }
 
-        .main-title {
-            padding: 40px 20px;
-            font-size: 28px;
-            text-transform: uppercase;
-        }
+        /* Country Grid Section */
+        .section-title { padding: 40px 0 10px; font-size: 28px; text-align: center; }
 
-        /* দেশের পতাকার গ্রিড */
-        .country-grid {
+        .country-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
         }
 
         .country-card {
             background: white;
-            padding: 10px;
-            border-radius: 10px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 15px;
+            text-align: center;
             cursor: pointer;
             transition: 0.3s;
-            color: black;
         }
 
-        .country-card:hover {
-            transform: scale(1.1);
-        }
+        .country-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        .country-card img { width: 100px; height: 60px; object-fit: cover; border-radius: 4px; margin-bottom: 10px; }
+        .country-card p { margin: 0; font-weight: bold; color: #555; }
 
-        .country-card img {
-            width: 100%;
-            border-radius: 5px;
-        }
-
-        /* ইনপুট সেকশন */
-        .check-section {
-            background: white;
-            color: black;
-            padding: 30px;
-            margin: 20px;
+        /* Verification Form Section */
+        .verify-box {
+            background: #fff;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 40px;
             border-radius: 15px;
-            display: inline-block;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 5px solid #8d5d0a;
         }
 
         input {
-            padding: 10px;
-            width: 80%;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
         }
 
         button {
-            background-color: #27ae60;
+            width: 100%;
+            padding: 15px;
+            background: #27ae60;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
             cursor: pointer;
-            font-size: 16px;
+            transition: 0.3s;
         }
+
+        button:hover { background: #219150; }
+
+        #result { margin-top: 20px; padding: 15px; border-radius: 8px; display: none; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
     </style>
 </head>
 <body>
 
     <header>
-        🌐 Verify Your Offer Letter
+        <div class="logo">🌐 GLOBAL VERIFY</div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Countries</a>
+            <a href="#">About</a>
+        </nav>
     </header>
 
-    <div class="main-title">
-        Select the country whose offer letter you want to verify.
+    <div class="banner">
+        <h1>Verify Your Offer Letter</h1>
+        <p>Official Verification Portal for Work Permits</p>
     </div>
 
-    <div class="country-grid">
+    <div class="section-title">Select Your Country</div>
+
+    <div class="country-container">
         <div class="country-card" onclick="selectCountry('USA')">
             <img src="https://flagcdn.com/w160/us.png" alt="USA">
             <p>USA</p>
         </div>
         <div class="country-card" onclick="selectCountry('Canada')">
             <img src="https://flagcdn.com/w160/ca.png" alt="Canada">
-            <p>Canada</p>
+            <p>CANADA</p>
+        </div>
+        <div class="country-card" onclick="selectCountry('UK')">
+            <img src="https://flagcdn.com/w160/gb.png" alt="UK">
+            <p>UK</p>
         </div>
         <div class="country-card" onclick="selectCountry('Cyprus')">
             <img src="https://flagcdn.com/w160/cy.png" alt="Cyprus">
-            <p>Cyprus</p>
+            <p>CYPRUS</p>
         </div>
-        <div class="country-card" onclick="selectCountry('Germany')">
-            <img src="https://flagcdn.com/w160/de.png" alt="Germany">
-            <p>Germany</p>
+        <div class="country-card" onclick="selectCountry('Malaysia')">
+            <img src="https://flagcdn.com/w160/my.png" alt="Malaysia">
+            <p>MALAYSIA</p>
         </div>
+        <div class="country-card" onclick="selectCountry('Saudi Arabia')">
+            <img src="https://flagcdn.com/w160/sa.png" alt="Saudi Arabia">
+            <p>SAUDI ARABIA</p>
         </div>
+    </div>
 
-    <div class="check-section" id="verify">
-        <h3 id="selectedCountry">Selected: None</h3>
-        <input type="text" id="permitID" placeholder="Enter Reference Number">
-        <br>
-        <button onclick="checkNow()">Verify Now</button>
-        <p id="status"></p>
+    <div class="verify-box" id="form-section">
+        <h3 id="displayCountry">Select a country above</h3>
+        <input type="text" id="refNumber" placeholder="Enter Reference / Passport Number">
+        <button onclick="checkNow()">VERIFY NOW</button>
+        <div id="result"></div>
     </div>
 
     <script>
-        let currentCountry = "";
+        let selected = "";
 
         function selectCountry(name) {
-            currentCountry = name;
-            document.getElementById('selectedCountry').innerText = "Selected: " + name;
-            document.getElementById('verify').scrollIntoView();
+            selected = name;
+            document.getElementById('displayCountry').innerText = "Verifying for: " + name;
+            document.getElementById('form-section').scrollIntoView({behavior: 'smooth'});
         }
 
         function checkNow() {
-            const id = document.getElementById('permitID').value;
-            const status = document.getElementById('status');
+            const id = document.getElementById('refNumber').value.trim();
+            const resultDiv = document.getElementById('result');
 
-            if (!currentCountry) {
+            if (!selected) {
                 alert("Please select a country first!");
                 return;
             }
+            if (!id) {
+                alert("Please enter a number!");
+                return;
+            }
 
-            status.innerText = "Checking database for " + currentCountry + "...";
-            
+            resultDiv.style.display = "block";
+            resultDiv.className = "";
+            resultDiv.innerHTML = "Checking database...";
+
             setTimeout(() => {
                 if (id === "123456") {
-                    status.style.color = "green";
-                    status.innerHTML = "<strong>APPROVED!</strong> Valid permit for " + currentCountry;
+                    resultDiv.className = "success";
+                    resultDiv.innerHTML = "<strong>APPROVED!</strong><br>Valid record found in " + selected + " server.";
                 } else {
-                    status.style.color = "red";
-                    status.innerHTML = "<strong>NOT FOUND!</strong> Invalid reference number.";
+                    resultDiv.className = "error";
+                    resultDiv.innerHTML = "<strong>NOT FOUND!</strong><br>No record found for " + id;
                 }
             }, 1500);
         }
     </script>
+
 </body>
 </html>
