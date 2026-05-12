@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Permit Verification Portal</title>
+    <title>Global Work Permit Verification</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f39c12; margin: 0; color: white; text-align: center; }
-        header { background-color: #7e5109; padding: 20px; font-size: 24px; font-weight: bold; }
-        .main-title { padding: 30px; font-size: 22px; text-transform: uppercase; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f39c12; margin: 0; color: white; text-align: center; }
+        header { background-color: #7e5109; padding: 20px; font-size: 24px; font-weight: bold; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .main-title { padding: 30px; font-size: 20px; text-transform: uppercase; font-weight: bold; }
 
         /* Country Grid */
         .country-grid {
@@ -15,26 +15,27 @@
             grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             gap: 15px;
             padding: 20px;
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
         .country-card {
             background: white;
             padding: 10px;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             transition: 0.3s;
-            color: black;
+            color: #333;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .country-card:hover { transform: scale(1.1); background: #eee; }
-        .country-card img { width: 100%; border-radius: 4px; }
-        .country-card p { margin: 5px 0 0; font-size: 12px; font-weight: bold; }
+        .country-card:hover { transform: translateY(-5px); background: #fff; box-shadow: 0 8px 15px rgba(0,0,0,0.2); }
+        .country-card img { width: 100%; height: 50px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd; }
+        .country-card p { margin: 8px 0 0; font-size: 11px; font-weight: bold; text-transform: uppercase; }
 
-        /* Verification Popup/Section */
+        /* Verification Popup */
         #verify-section {
-            display: none; /* Prothome lukiye thakbe */
+            display: none;
             background: white;
             color: black;
             padding: 30px;
@@ -43,28 +44,21 @@
             left: 50%;
             transform: translate(-50%, -50%);
             border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
             z-index: 1001;
-            width: 300px;
+            width: 320px;
         }
 
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-        }
-
-        input { padding: 10px; width: 90%; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; }
-        button { background-color: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
-        .close-btn { background: #e74c3c; margin-top: 10px; font-size: 12px; }
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; }
+        input { padding: 12px; width: 90%; margin-bottom: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; }
+        button { background-color: #27ae60; color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; }
+        .close-btn { background: #e74c3c; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <header>🌐 WORK PERMIT VERIFICATION</header>
-    <div class="main-title">Select Country to Verify Offer Letter</div>
+    <header>🌐 GLOBAL PERMIT VERIFICATION</header>
+    <div class="main-title">Select Country to Verify Your Work Permit</div>
 
     <div class="country-grid" id="grid">
         </div>
@@ -72,40 +66,51 @@
     <div class="overlay" id="overlay" onclick="closePopup()"></div>
     <div id="verify-section">
         <h3 id="countryName">Country</h3>
-        <p>Enter Reference/Permit Code:</p>
-        <input type="text" id="permitCode" placeholder="Enter Code Here">
-        <br>
-        <button onclick="checkCode()">VIEW PDF PERMIT</button>
-        <br>
-        <button class="close-btn" onclick="closePopup()">Close</button>
+        <p style="font-size: 14px; color: #666;">Enter Reference or Passport Number:</p>
+        <input type="text" id="permitCode" placeholder="Type Code Here...">
+        <button onclick="checkCode()">VERIFY & VIEW PDF</button>
+        <button class="close-btn" onclick="closePopup()">CLOSE</button>
     </div>
 
     <script>
-        // 50+ Desher List (Apni icche moto aro barate paren)
+        // 100+ Countries Data
         const countries = [
-            {n: "USA", c: "us"}, {n: "Canada", c: "ca"}, {n: "UK", c: "gb"}, {n: "Cyprus", c: "cy"},
-            {n: "Malaysia", c: "my"}, {n: "Saudi Arabia", c: "sa"}, {n: "UAE", c: "ae"}, {n: "Qatar", c: "qa"},
-            {n: "Oman", c: "om"}, {n: "Singapore", c: "sg"}, {n: "Italy", c: "it"}, {n: "Romania", c: "ro"},
-            {n: "Portugal", c: "pt"}, {n: "Malta", c: "mt"}, {n: "Poland", c: "pl"}, {n: "Croatia", c: "hr"},
-            {n: "France", c: "fr"}, {n: "Germany", c: "de"}, {n: "Kuwait", c: "kw"}, {n: "Bahrain", c: "bh"},
-            {n: "South Korea", c: "kr"}, {n: "Japan", c: "jp"}, {n: "Maldives", c: "mv"}, {n: "Jordan", c: "jo"},
-            {n: "Russia", c: "ru"}, {n: "Australia", c: "au"}, {n: "New Zealand", c: "nz"}, {n: "Ireland", c: "ie"},
-            {n: "Sweden", c: "se"}, {n: "Finland", c: "fi"}, {n: "Norway", c: "no"}, {n: "Switzerland", c: "ch"},
-            {n: "Denmark", c: "dk"}, {n: "Belgium", c: "be"}, {n: "Netherlands", c: "nl"}, {n: "Spain", c: "es"},
-            {n: "Greece", c: "gr"}, {n: "Turkey", c: "tr"}, {n: "Hungary", c: "hu"}, {n: "Austria", c: "at"},
-            {n: "Egypt", c: "eg"}, {n: "Thailand", c: "th"}, {n: "Vietnam", c: "vn"}, {n: "Brazil", c: "br"},
-            {n: "Mexico", c: "mx"}, {n: "South Africa", c: "za"}, {n: "Mauritius", c: "mu"}, {n: "Brunei", c: "bn"}
+            {n: "USA", c: "us"}, {n: "Canada", c: "ca"}, {n: "UK", c: "gb"}, {n: "Australia", c: "au"},
+            {n: "Germany", c: "de"}, {n: "France", c: "fr"}, {n: "Italy", c: "it"}, {n: "Spain", c: "es"},
+            {n: "Portugal", c: "pt"}, {n: "Romania", c: "ro"}, {n: "Poland", c: "pl"}, {n: "Malta", c: "mt"},
+            {n: "Cyprus", c: "cy"}, {n: "Greece", c: "gr"}, {n: "Croatia", c: "hr"}, {n: "Hungary", c: "hu"},
+            {n: "Malaysia", c: "my"}, {n: "Singapore", c: "sg"}, {n: "Saudi Arabia", c: "sa"}, {n: "UAE", c: "ae"},
+            {n: "Qatar", c: "qa"}, {n: "Oman", c: "om"}, {n: "Kuwait", c: "kw"}, {n: "Bahrain", c: "bh"},
+            {n: "South Korea", c: "kr"}, {n: "Japan", c: "jp"}, {n: "Maldives", c: "mv"}, {n: "Thailand", c: "th"},
+            {n: "Vietnam", c: "vn"}, {n: "Brunei", c: "bn"}, {n: "Russia", c: "ru"}, {n: "Turkey", c: "tr"},
+            {n: "Jordan", c: "jo"}, {n: "Lebanon", c: "lb"}, {n: "Egypt", c: "eg"}, {n: "South Africa", c: "za"},
+            {n: "Mauritius", c: "mu"}, {n: "New Zealand", c: "nz"}, {n: "Ireland", c: "ie"}, {n: "Switzerland", c: "ch"},
+            {n: "Sweden", c: "se"}, {n: "Norway", c: "no"}, {n: "Finland", c: "fi"}, {n: "Denmark", c: "dk"},
+            {n: "Belgium", c: "be"}, {n: "Netherlands", c: "nl"}, {n: "Austria", c: "at"}, {n: "Czechia", c: "cz"},
+            {n: "Slovakia", c: "sk"}, {n: "Slovenia", c: "si"}, {n: "Bulgaria", c: "bg"}, {n: "Lithuania", c: "lt"},
+            {n: "Latvia", c: "lv"}, {n: "Estonia", c: "ee"}, {n: "Luxembourg", c: "lu"}, {n: "Iceland", c: "is"},
+            {n: "Brazil", c: "br"}, {n: "Argentina", c: "ar"}, {n: "Chile", c: "cl"}, {n: "Mexico", c: "mx"},
+            {n: "Panama", c: "pa"}, {n: "Israel", c: "il"}, {n: "Azerbaijan", c: "az"}, {n: "Georgia", c: "ge"},
+            {n: "Kazakhstan", c: "kz"}, {n: "Uzbekistan", c: "uz"}, {n: "Philippines", c: "ph"}, {n: "Indonesia", c: "id"},
+            {n: "Sri Lanka", c: "lk"}, {n: "Bangladesh", c: "bd"}, {n: "India", c: "in"}, {n: "Pakistan", c: "pk"},
+            {n: "Nepal", c: "np"}, {n: "Bhutan", c: "bt"}, {n: "Cambodia", c: "kh"}, {n: "Laos", c: "la"},
+            {n: "Mongolia", c: "mn"}, {n: "Morocco", c: "ma"}, {n: "Algeria", c: "dz"}, {n: "Tunisia", c: "tn"},
+            {n: "Kenya", c: "ke"}, {n: "Nigeria", c: "ng"}, {n: "Ghana", c: "gh"}, {n: "Ethiopia", c: "et"},
+            {n: "Uganda", c: "ug"}, {n: "Tanzania", c: "tz"}, {n: "Seychelles", c: "sc"}, {n: "Fiji", c: "fj"},
+            {n: "Samoa", c: "ws"}, {n: "Vanuatu", c: "vu"}, {n: "Bahamas", c: "bs"}, {n: "Jamaica", c: "jm"},
+            {n: "Barbados", c: "bb"}, {n: "Cuba", c: "cu"}, {n: "Peru", c: "pe"}, {n: "Colombia", c: "co"},
+            {n: "Uruguay", c: "uy"}, {n: "Paraguay", c: "py"}, {n: "Bolivia", c: "bo"}, {n: "Ecuador", c: "ec"}
         ];
 
         const grid = document.getElementById('grid');
         let selectedCountry = "";
 
-        // Flags generate kora
-        countries.forEach(country => {
+        // Generate Cards
+        countries.sort((a, b) => a.n.localeCompare(b.n)).forEach(country => {
             const card = document.createElement('div');
             card.className = 'country-card';
             card.onclick = () => openPopup(country.n);
-            card.innerHTML = `<img src="https://flagcdn.com/w160/${country.c}.png"><p>${country.n}</p>`;
+            card.innerHTML = `<img src="https://flagcdn.com/w160/${country.c}.png" loading="lazy"><p>${country.n}</p>`;
             grid.appendChild(card);
         });
 
@@ -125,14 +130,13 @@
         function checkCode() {
             const code = document.getElementById('permitCode').value.trim();
             
-            // CODE Lojic: Ekhane apni PDF link boshaben
+            // PDF LOGIC: এখানে আপনার আপলোড করা PDF এর লিঙ্কগুলো বসাবেন
             if(code === "123456") {
-                // Jodi code thik hoy, tobe PDF open hobe
-                window.open("apnar-file-link.pdf", "_blank"); 
+                window.open("https://your-pdf-link-here.com/file.pdf", "_blank"); 
             } else if(code === "786786") {
-                window.open("onno-ekta-file.pdf", "_blank");
+                window.open("https://another-link.com/file.pdf", "_blank");
             } else {
-                alert("Invalid Code! Please try again.");
+                alert("Status: NOT FOUND! Please check your code.");
             }
         }
     </script>
