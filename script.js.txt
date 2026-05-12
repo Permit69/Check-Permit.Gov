@@ -1,0 +1,19 @@
+function checkStatus() {
+    let inputVal = document.getElementById('permitNumber').value;
+    let resultDiv = document.getElementById('result');
+
+    if(inputVal === "") {
+        alert("দয়া করে নাম্বার দিন!");
+        return;
+    }
+
+    // রেজাল্ট বক্সটি দেখান
+    resultDiv.style.display = "block";
+    
+    // এখানে আপনি কন্ডিশন সেট করতে পারেন
+    if(inputVal === "12345") {
+        resultDiv.innerHTML = "<h3 style='color:green;'>Approved!</h3><p>আপনার পারমিটটি অনুমোদিত হয়েছে।</p>";
+    } else {
+        resultDiv.innerHTML = "<h3 style='color:red;'>Not Found!</h3><p>দুঃখিত, কোনো তথ্য পাওয়া যায়নি।</p>";
+    }
+}
