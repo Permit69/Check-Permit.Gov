@@ -71,36 +71,49 @@
 
     <script>
         const countries = [
-            {n: "USA", c: "us"}, {n: "Canada", c: "ca"}, {n: "UK", c: "gb"}, {n: "Australia", c: "au"},
+            // Europe
             {n: "Serbia", c: "rs"}, {n: "Portugal", c: "pt"}, {n: "Germany", c: "de"}, {n: "France", c: "fr"},
-            {n: "Italy", c: "it"}, {n: "Spain", c: "es"}, {n: "Romania", c: "ro"}, {n: "Poland", c: "pl"},
-            {n: "Malta", c: "mt"}, {n: "Cyprus", c: "cy"}, {n: "Greece", c: "gr"}, {n: "Croatia", c: "hr"},
-            {n: "Hungary", c: "hu"}, {n: "Malaysia", c: "my"}, {n: "Singapore", c: "sg"}, {n: "Saudi Arabia", c: "sa"},
-            {n: "UAE", c: "ae"}, {n: "Qatar", c: "qa"}, {n: "Oman", c: "om"}, {n: "Kuwait", c: "kw"},
-            {n: "Bahrain", c: "bh"}, {n: "South Korea", c: "kr"}, {n: "Japan", c: "jp"}, {n: "Maldives", c: "mv"},
-            {n: "Thailand", c: "th"}, {n: "Vietnam", c: "vn"}, {n: "Brunei", c: "bn"}, {n: "Russia", c: "ru"},
-            {n: "Turkey", c: "tr"}, {n: "Jordan", c: "jo"}, {n: "Egypt", c: "eg"}, {n: "South Africa", c: "za"},
-            {n: "Mauritius", c: "mu"}, {n: "New Zealand", c: "nz"}, {n: "Ireland", c: "ie"}, {n: "Switzerland", c: "ch"},
-            {n: "Sweden", c: "se"}, {n: "Norway", c: "no"}, {n: "Finland", c: "fi"}, {n: "Denmark", c: "dk"},
-            {n: "Belgium", c: "be"}, {n: "Netherlands", c: "nl"}, {n: "Austria", c: "at"}, {n: "Czechia", c: "cz"},
+            {n: "Italy", c: "it"}, {n: "Spain", c: "es"}, {n: "UK", c: "gb"}, {n: "Romania", c: "ro"},
+            {n: "Poland", c: "pl"}, {n: "Malta", c: "mt"}, {n: "Cyprus", c: "cy"}, {n: "Greece", c: "gr"},
+            {n: "Croatia", c: "hr"}, {n: "Hungary", c: "hu"}, {n: "Czechia", c: "cz"}, {n: "Austria", c: "at"},
+            {n: "Switzerland", c: "ch"}, {n: "Sweden", c: "se"}, {n: "Norway", c: "no"}, {n: "Finland", c: "fi"},
+            {n: "Denmark", c: "dk"}, {n: "Belgium", c: "be"}, {n: "Netherlands", c: "nl"}, {n: "Ireland", c: "ie"},
             {n: "Slovakia", c: "sk"}, {n: "Slovenia", c: "si"}, {n: "Bulgaria", c: "bg"}, {n: "Lithuania", c: "lt"},
             {n: "Latvia", c: "lv"}, {n: "Estonia", c: "ee"}, {n: "Luxembourg", c: "lu"}, {n: "Iceland", c: "is"},
-            {n: "Brazil", c: "br"}, {n: "Argentina", c: "ar"}, {n: "Mexico", c: "mx"}, {n: "Israel", c: "il"},
-            {n: "Philippines", c: "ph"}, {n: "Indonesia", c: "id"}, {n: "Bangladesh", c: "bd"}, {n: "India", c: "in"},
-            {n: "Pakistan", c: "pk"}, {n: "Nepal", c: "np"}, {n: "Sri Lanka", c: "lk"}, {n: "Albania", c: "al"},
-            {n: "Armenia", c: "am"}, {n: "Georgia", c: "ge"}, {n: "Kazakhstan", c: "kz"}, {n: "Moldova", c: "md"},
-            {n: "Montenegro", c: "me"}, {n: "North Macedonia", c: "mk"}, {n: "Ukraine", c: "ua"}, {n: "Uzbekistan", c: "uz"},
-            {n: "Azerbaijan", c: "az"}, {n: "Belarus", c: "by"}, {n: "Bosnia", c: "ba"}, {n: "Andorra", c: "ad"},
-            {n: "Monaco", c: "mc"}, {n: "San Marino", c: "sm"}, {n: "Liechtenstein", c: "li"}, {n: "Kosovo", c: "xk"},
-            {n: "Lebanon", c: "lb"}, {n: "Iraq", c: "iq"}, {n: "Morocco", c: "ma"}, {n: "Tunisia", c: "tn"},
-            {n: "Algeria", c: "dz"}, {n: "Libya", c: "ly"}, {n: "Nigeria", c: "ng"}, {n: "Kenya", c: "ke"},
-            {n: "Ghana", c: "gh"}, {n: "Ethiopia", c: "et"}, {n: "Uganda", c: "ug"}, {n: "Tanzania", c: "tz"},
-            {n: "Seychelles", c: "sc"}, {n: "Fiji", c: "fj"}, {n: "Samoa", c: "ws"}, {n: "Vanuatu", c: "vu"}
+            {n: "Albania", c: "al"}, {n: "Armenia", c: "am"}, {n: "Georgia", c: "ge"}, {n: "Moldova", c: "md"},
+            {n: "Montenegro", c: "me"}, {n: "North Macedonia", c: "mk"}, {n: "Ukraine", c: "ua"}, {n: "Belarus", c: "by"},
+            {n: "Bosnia", c: "ba"}, {n: "Andorra", c: "ad"}, {n: "Monaco", c: "mc"}, {n: "San Marino", c: "sm"},
+            // Asia & Middle East
+            {n: "Malaysia", c: "my"}, {n: "Singapore", c: "sg"}, {n: "Saudi Arabia", c: "sa"}, {n: "UAE", c: "ae"},
+            {n: "Qatar", c: "qa"}, {n: "Oman", c: "om"}, {n: "Kuwait", c: "kw"}, {n: "Bahrain", c: "bh"},
+            {n: "South Korea", c: "kr"}, {n: "Japan", c: "jp"}, {n: "Maldives", c: "mv"}, {n: "Thailand", c: "th"},
+            {n: "Vietnam", c: "vn"}, {n: "Brunei", c: "bn"}, {n: "Russia", c: "ru"}, {n: "Turkey", c: "tr"},
+            {n: "Jordan", c: "jo"}, {n: "Lebanon", c: "lb"}, {n: "Israel", c: "il"}, {n: "Philippines", c: "ph"},
+            {n: "Indonesia", c: "id"}, {n: "Bangladesh", c: "bd"}, {n: "India", c: "in"}, {n: "Pakistan", c: "pk"},
+            {n: "Nepal", c: "np"}, {n: "Sri Lanka", c: "lk"}, {n: "Uzbekistan", c: "uz"}, {n: "Kazakhstan", c: "kz"},
+            {n: "Azerbaijan", c: "az"}, {n: "Cambodia", c: "kh"}, {n: "Laos", c: "la"}, {n: "Mongolia", c: "mn"},
+            {n: "Tajikistan", c: "tj"}, {n: "Kyrgyzstan", c: "kg"}, {n: "Myanmar", c: "mm"}, {n: "Taiwan", c: "tw"},
+            // Americas
+            {n: "USA", c: "us"}, {n: "Canada", c: "ca"}, {n: "Brazil", c: "br"}, {n: "Argentina", c: "ar"},
+            {n: "Mexico", c: "mx"}, {n: "Chile", c: "cl"}, {n: "Colombia", c: "co"}, {n: "Peru", c: "pe"},
+            {n: "Uruguay", c: "uy"}, {n: "Paraguay", c: "py"}, {n: "Bolivia", c: "bo"}, {n: "Ecuador", c: "ec"},
+            {n: "Panama", c: "pa"}, {n: "Costa Rica", c: "cr"}, {n: "Jamaica", c: "jm"}, {n: "Cuba", c: "cu"},
+            {n: "Bahamas", c: "bs"}, {n: "Barbados", c: "bb"}, {n: "Guyana", c: "gy"}, {n: "Dominican Republic", c: "do"},
+            // Africa
+            {n: "South Africa", c: "za"}, {n: "Egypt", c: "eg"}, {n: "Mauritius", c: "mu"}, {n: "Nigeria", c: "ng"},
+            {n: "Kenya", c: "ke"}, {n: "Ghana", c: "gh"}, {n: "Ethiopia", c: "et"}, {n: "Morocco", c: "ma"},
+            {n: "Algeria", c: "dz"}, {n: "Tunisia", c: "tn"}, {n: "Uganda", c: "ug"}, {n: "Tanzania", c: "tz"},
+            {n: "Seychelles", c: "sc"}, {n: "Zambia", c: "zm"}, {n: "Zimbabwe", c: "zw"}, {n: "Namibia", c: "na"},
+            {n: "Botswana", c: "bw"}, {n: "Senegal", c: "sn"}, {n: "Ivory Coast", c: "ci"}, {n: "Cameroon", c: "cm"},
+            // Oceania
+            {n: "Australia", c: "au"}, {n: "New Zealand", c: "nz"}, {n: "Fiji", c: "fj"}, {n: "Samoa", c: "ws"},
+            {n: "Vanuatu", c: "vu"}, {n: "Solomon Islands", c: "sb"}, {n: "Tonga", c: "to"}, {n: "Kiribati", c: "ki"}
         ];
 
         const grid = document.getElementById('grid');
         let selectedCountry = "";
 
+        // Sort A to Z and Display
         countries.sort((a, b) => a.n.localeCompare(b.n)).forEach(country => {
             const card = document.createElement('div');
             card.className = 'country-card';
@@ -124,12 +137,11 @@
 
         function checkCode() {
             const code = document.getElementById('permitCode').value.trim();
-            
-            // আপনার PDF লিঙ্কগুলো এখানে বসাবেন
+            // PDF links logic
             if(code === "123456") {
-                window.open("https://your-pdf-link-here.com/file.pdf", "_blank"); 
+                window.open("https://link-to-your-pdf.pdf", "_blank"); 
             } else {
-                alert("Status: NOT FOUND! Please check your code.");
+                alert("Status: NOT FOUND! Please verify the code.");
             }
         }
     </script>
