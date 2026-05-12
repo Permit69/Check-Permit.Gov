@@ -3,42 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Permit Status Checker</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Work Permit Verification</title>
+    <style>
+        /* ডিজাইন: আপনার দেওয়া স্ক্রিনশটের মতো লুক */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f39c12; /* কমলা রঙের ব্যাকগ্রাউন্ড */
+            margin: 0;
+            color: white;
+            text-align: center;
+        }
+
+        header {
+            background-color: #7e5109;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .main-title {
+            padding: 40px 20px;
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+
+        /* দেশের পতাকার গ্রিড */
+        .country-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .country-card {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            color: black;
+        }
+
+        .country-card:hover {
+            transform: scale(1.1);
+        }
+
+        .country-card img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        /* ইনপুট সেকশন */
+        .check-section {
+            background: white;
+            color: black;
+            padding: 30px;
+            margin: 20px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        input {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2>Permit Status</h2>
-        <p>Select country and enter your number to check</p>
+    <header>
+        🌐 Verify Your Offer Letter
+    </header>
 
-        <select id="country">
-            <option value="">-- Select Country --</option>
-            <option value="Malaysia">Malaysia</option>
-            <option value="Saudi Arabia">Saudi Arabia</option>
-            <option value="UAE">UAE</option>
-            <option value="Qatar">Qatar</option>
-            <option value="Oman">Oman</option>
-            <option value="Singapore">Singapore</option>
-            <option value="Canada">Canada</option>
-            <option value="Italy">Italy</option>
-            <option value="Kuwait">Kuwait</option>
-            <option value="Bahrain">Bahrain</option>
-            <option value="USA">USA</option>
-            <option value="UK">UK</option>
-            </select>
-
-        <input type="text" id="permitNumber" placeholder="Enter Passport / Permit Number">
-        
-        <button onclick="checkStatus()">CHECK STATUS</button>
-
-        <div id="result"></div>
-
-        <div class="footer">
-            © 2026 Global Permit Verification System
-        </div>
+    <div class="main-title">
+        Select the country whose offer letter you want to verify.
     </div>
 
-    <script src="script.js"></script>
+    <div class="country-grid">
+        <div class="country-card" onclick="selectCountry('USA')">
+            <img src="https://flagcdn.com/w160/us.png" alt="USA">
+            <p>USA</p>
+        </div>
+        <div class="country-card" onclick="selectCountry('Canada')">
+            <img src="https://flagcdn.com/w160/ca.png" alt="Canada">
+            <p>Canada</p>
+        </div>
+        <div class="country-card" onclick="selectCountry('Cyprus')">
+            <img src="https://flagcdn.com/w160/cy.png" alt="Cyprus">
+            <p>Cyprus</p>
+        </div>
+        <div class="country-card" onclick="selectCountry('Germany')">
+            <img src="https://flagcdn.com/w160/de.png" alt="Germany">
+            <p>Germany</p>
+        </div>
+        </div>
+
+    <div class="check-section" id="verify">
+        <h3 id="selectedCountry">Selected: None</h3>
+        <input type="text" id="permitID" placeholder="Enter Reference Number">
+        <br>
+        <button onclick="checkNow()">Verify Now</button>
+        <p id="status"></p>
+    </div>
+
+    <script>
+        let currentCountry = "";
+
+        function selectCountry(name) {
+            currentCountry = name;
+            document.getElementById('selectedCountry').innerText = "Selected: " + name;
+            document.getElementById('verify').scrollIntoView();
+        }
+
+        function checkNow() {
+            const id = document.getElementById('permitID').value;
+            const status = document.getElementById('status');
+
+            if (!currentCountry) {
+                alert("Please select a country first!");
+                return;
+            }
+
+            status.innerText = "Checking database for " + currentCountry + "...";
+            
+            setTimeout(() => {
+                if (id === "123456") {
+                    status.style.color = "green";
+                    status.innerHTML = "<strong>APPROVED!</strong> Valid permit for " + currentCountry;
+                } else {
+                    status.style.color = "red";
+                    status.innerHTML = "<strong>NOT FOUND!</strong> Invalid reference number.";
+                }
+            }, 1500);
+        }
+    </script>
 </body>
 </html>
