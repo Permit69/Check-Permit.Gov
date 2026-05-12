@@ -3,206 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Work Permit Verification Portal</title>
+    <title>Global Permit Verification Portal</title>
     <style>
-        /* CSS for Professional Look */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f4f7f6;
-            color: #333;
-        }
+        body { font-family: Arial, sans-serif; background-color: #f39c12; margin: 0; color: white; text-align: center; }
+        header { background-color: #7e5109; padding: 20px; font-size: 24px; font-weight: bold; }
+        .main-title { padding: 30px; font-size: 22px; text-transform: uppercase; }
 
-        /* Top Header Navigation */
-        header {
-            background-color: #8d5d0a; /* Brownish like the example */
-            color: white;
-            padding: 15px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        header .logo { font-size: 24px; font-weight: bold; }
-        nav a { color: white; text-decoration: none; margin-left: 20px; font-weight: 500; }
-
-        /* Banner Section */
-        .banner {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1521295121812-327341e3d30b?auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            height: 300px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-align: center;
-        }
-
-        .banner h1 { font-size: 40px; margin: 0; text-transform: uppercase; }
-
-        /* Country Grid Section */
-        .section-title { padding: 40px 0 10px; font-size: 28px; text-align: center; }
-
-        .country-container {
+        /* Country Grid */
+        .country-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            padding: 20px;
             max-width: 1100px;
-            margin: 30px auto;
-            padding: 0 20px;
+            margin: 0 auto;
         }
 
         .country-card {
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            padding: 15px;
-            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
             cursor: pointer;
             transition: 0.3s;
+            color: black;
         }
 
-        .country-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
-        .country-card img { width: 100px; height: 60px; object-fit: cover; border-radius: 4px; margin-bottom: 10px; }
-        .country-card p { margin: 0; font-weight: bold; color: #555; }
+        .country-card:hover { transform: scale(1.1); background: #eee; }
+        .country-card img { width: 100%; border-radius: 4px; }
+        .country-card p { margin: 5px 0 0; font-size: 12px; font-weight: bold; }
 
-        /* Verification Form Section */
-        .verify-box {
-            background: #fff;
-            max-width: 500px;
-            margin: 50px auto;
-            padding: 40px;
+        /* Verification Popup/Section */
+        #verify-section {
+            display: none; /* Prothome lukiye thakbe */
+            background: white;
+            color: black;
+            padding: 30px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
-            border-top: 5px solid #8d5d0a;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            z-index: 1001;
+            width: 300px;
         }
 
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 15px 0;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            box-sizing: border-box;
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
         }
 
-        button {
-            width: 100%;
-            padding: 15px;
-            background: #27ae60;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        button:hover { background: #219150; }
-
-        #result { margin-top: 20px; padding: 15px; border-radius: 8px; display: none; }
-        .success { background: #d4edda; color: #155724; }
-        .error { background: #f8d7da; color: #721c24; }
+        input { padding: 10px; width: 90%; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        button { background-color: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        .close-btn { background: #e74c3c; margin-top: 10px; font-size: 12px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">🌐 GLOBAL VERIFY</div>
-        <nav>
-            <a href="#">Home</a>
-            <a href="#">Countries</a>
-            <a href="#">About</a>
-        </nav>
-    </header>
+    <header>🌐 WORK PERMIT VERIFICATION</header>
+    <div class="main-title">Select Country to Verify Offer Letter</div>
 
-    <div class="banner">
-        <h1>Verify Your Offer Letter</h1>
-        <p>Official Verification Portal for Work Permits</p>
-    </div>
+    <div class="country-grid" id="grid">
+        </div>
 
-    <div class="section-title">Select Your Country</div>
-
-    <div class="country-container">
-        <div class="country-card" onclick="selectCountry('USA')">
-            <img src="https://flagcdn.com/w160/us.png" alt="USA">
-            <p>USA</p>
-        </div>
-        <div class="country-card" onclick="selectCountry('Canada')">
-            <img src="https://flagcdn.com/w160/ca.png" alt="Canada">
-            <p>CANADA</p>
-        </div>
-        <div class="country-card" onclick="selectCountry('UK')">
-            <img src="https://flagcdn.com/w160/gb.png" alt="UK">
-            <p>UK</p>
-        </div>
-        <div class="country-card" onclick="selectCountry('Cyprus')">
-            <img src="https://flagcdn.com/w160/cy.png" alt="Cyprus">
-            <p>CYPRUS</p>
-        </div>
-        <div class="country-card" onclick="selectCountry('Malaysia')">
-            <img src="https://flagcdn.com/w160/my.png" alt="Malaysia">
-            <p>MALAYSIA</p>
-        </div>
-        <div class="country-card" onclick="selectCountry('Saudi Arabia')">
-            <img src="https://flagcdn.com/w160/sa.png" alt="Saudi Arabia">
-            <p>SAUDI ARABIA</p>
-        </div>
-    </div>
-
-    <div class="verify-box" id="form-section">
-        <h3 id="displayCountry">Select a country above</h3>
-        <input type="text" id="refNumber" placeholder="Enter Reference / Passport Number">
-        <button onclick="checkNow()">VERIFY NOW</button>
-        <div id="result"></div>
+    <div class="overlay" id="overlay" onclick="closePopup()"></div>
+    <div id="verify-section">
+        <h3 id="countryName">Country</h3>
+        <p>Enter Reference/Permit Code:</p>
+        <input type="text" id="permitCode" placeholder="Enter Code Here">
+        <br>
+        <button onclick="checkCode()">VIEW PDF PERMIT</button>
+        <br>
+        <button class="close-btn" onclick="closePopup()">Close</button>
     </div>
 
     <script>
-        let selected = "";
+        // 50+ Desher List (Apni icche moto aro barate paren)
+        const countries = [
+            {n: "USA", c: "us"}, {n: "Canada", c: "ca"}, {n: "UK", c: "gb"}, {n: "Cyprus", c: "cy"},
+            {n: "Malaysia", c: "my"}, {n: "Saudi Arabia", c: "sa"}, {n: "UAE", c: "ae"}, {n: "Qatar", c: "qa"},
+            {n: "Oman", c: "om"}, {n: "Singapore", c: "sg"}, {n: "Italy", c: "it"}, {n: "Romania", c: "ro"},
+            {n: "Portugal", c: "pt"}, {n: "Malta", c: "mt"}, {n: "Poland", c: "pl"}, {n: "Croatia", c: "hr"},
+            {n: "France", c: "fr"}, {n: "Germany", c: "de"}, {n: "Kuwait", c: "kw"}, {n: "Bahrain", c: "bh"},
+            {n: "South Korea", c: "kr"}, {n: "Japan", c: "jp"}, {n: "Maldives", c: "mv"}, {n: "Jordan", c: "jo"},
+            {n: "Russia", c: "ru"}, {n: "Australia", c: "au"}, {n: "New Zealand", c: "nz"}, {n: "Ireland", c: "ie"},
+            {n: "Sweden", c: "se"}, {n: "Finland", c: "fi"}, {n: "Norway", c: "no"}, {n: "Switzerland", c: "ch"},
+            {n: "Denmark", c: "dk"}, {n: "Belgium", c: "be"}, {n: "Netherlands", c: "nl"}, {n: "Spain", c: "es"},
+            {n: "Greece", c: "gr"}, {n: "Turkey", c: "tr"}, {n: "Hungary", c: "hu"}, {n: "Austria", c: "at"},
+            {n: "Egypt", c: "eg"}, {n: "Thailand", c: "th"}, {n: "Vietnam", c: "vn"}, {n: "Brazil", c: "br"},
+            {n: "Mexico", c: "mx"}, {n: "South Africa", c: "za"}, {n: "Mauritius", c: "mu"}, {n: "Brunei", c: "bn"}
+        ];
 
-        function selectCountry(name) {
-            selected = name;
-            document.getElementById('displayCountry').innerText = "Verifying for: " + name;
-            document.getElementById('form-section').scrollIntoView({behavior: 'smooth'});
+        const grid = document.getElementById('grid');
+        let selectedCountry = "";
+
+        // Flags generate kora
+        countries.forEach(country => {
+            const card = document.createElement('div');
+            card.className = 'country-card';
+            card.onclick = () => openPopup(country.n);
+            card.innerHTML = `<img src="https://flagcdn.com/w160/${country.c}.png"><p>${country.n}</p>`;
+            grid.appendChild(card);
+        });
+
+        function openPopup(name) {
+            selectedCountry = name;
+            document.getElementById('countryName').innerText = name;
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('verify-section').style.display = 'block';
         }
 
-        function checkNow() {
-            const id = document.getElementById('refNumber').value.trim();
-            const resultDiv = document.getElementById('result');
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('verify-section').style.display = 'none';
+            document.getElementById('permitCode').value = "";
+        }
 
-            if (!selected) {
-                alert("Please select a country first!");
-                return;
+        function checkCode() {
+            const code = document.getElementById('permitCode').value.trim();
+            
+            // CODE Lojic: Ekhane apni PDF link boshaben
+            if(code === "123456") {
+                // Jodi code thik hoy, tobe PDF open hobe
+                window.open("apnar-file-link.pdf", "_blank"); 
+            } else if(code === "786786") {
+                window.open("onno-ekta-file.pdf", "_blank");
+            } else {
+                alert("Invalid Code! Please try again.");
             }
-            if (!id) {
-                alert("Please enter a number!");
-                return;
-            }
-
-            resultDiv.style.display = "block";
-            resultDiv.className = "";
-            resultDiv.innerHTML = "Checking database...";
-
-            setTimeout(() => {
-                if (id === "123456") {
-                    resultDiv.className = "success";
-                    resultDiv.innerHTML = "<strong>APPROVED!</strong><br>Valid record found in " + selected + " server.";
-                } else {
-                    resultDiv.className = "error";
-                    resultDiv.innerHTML = "<strong>NOT FOUND!</strong><br>No record found for " + id;
-                }
-            }, 1500);
         }
     </script>
-
 </body>
 </html>
