@@ -3,155 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Permit Checker</title>
+    <title>Global Permit Status Checker</title>
     <style>
+        /* ডিজাইন: সাইটটিকে সুন্দর করার জন্য */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            color: #333;
         }
+
         .container {
-            background: #fff;
+            background: #ffffff;
             width: 90%;
             max-width: 450px;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
             text-align: center;
         }
-        h2 { color: #333; margin-bottom: 20px; }
+
+        h2 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
         select, input {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
             border: 2px solid #ddd;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 16px;
             box-sizing: border-box;
+            transition: 0.3s;
         }
+
+        select:focus, input:focus {
+            border-color: #2a5298;
+            outline: none;
+        }
+
         button {
             width: 100%;
-            padding: 14px;
-            background: #27ae60;
+            padding: 15px;
+            background-color: #28a745;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
+            margin-top: 15px;
             transition: 0.3s;
         }
-        button:hover { background: #219150; }
-        #result {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            display: none;
-            font-weight: 500;
+
+        button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
         }
-        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+        #result {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #999;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Permit Status</h2>
-    <p>Select Country and Enter Details</p>
+    <div class="container">
+        <h2>Permit Status</h2>
+        <p>Select country and enter your number to check</p>
 
-    <!-- দেশের ড্রপডাউন মেনু (৫০+ দেশ) -->
-    <select id="countrySelect">
-        <option value="">-- Select Country --</option>
-        <option value="Malaysia">Malaysia</option>
-        <option value="Saudi Arabia">Saudi Arabia</option>
-        <option value="UAE">UAE (Dubai)</option>
-        <option value="Qatar">Qatar</option>
-        <option value="Oman">Oman</option>
-        <option value="Kuwait">Kuwait</option>
-        <option value="Singapore">Singapore</option>
-        <option value="Italy">Italy</option>
-        <option value="Canada">Canada</option>
-        <option value="USA">USA</option>
-        <option value="UK">UK</option>
-        <option value="Australia">Australia</option>
-        <option value="Germany">Germany</option>
-        <option value="France">France</option>
-        <option value="Japan">Japan</option>
-        <option value="South Korea">South Korea</option>
-        <option value="Jordan">Jordan</option>
-        <option value="Lebanon">Lebanon</option>
-        <option value="Bahrain">Bahrain</option>
-        <option value="Malta">Malta</option>
-        <option value="Portugal">Portugal</option>
-        <option value="Spain">Spain</option>
-        <option value="Greece">Greece</option>
-        <option value="Poland">Poland</option>
-        <option value="Romania">Romania</option>
-        <option value="Croatia">Croatia</option>
-        <option value="Maldives">Maldives</option>
-        <option value="Mauritius">Mauritius</option>
-        <option value="South Africa">South Africa</option>
-        <option value="Russia">Russia</option>
-        <option value="Turkey">Turkey</option>
-        <option value="Brazil">Brazil</option>
-        <option value="Mexico">Mexico</option>
-        <option value="Egypt">Egypt</option>
-        <option value="Iraq">Iraq</option>
-        <option value="Libya">Libya</option>
-        <option value="Brunei">Brunei</option>
-        <option value="Vietnam">Vietnam</option>
-        <option value="Thailand">Thailand</option>
-        <option value="New Zealand">New Zealand</option>
-        <option value="Ireland">Ireland</option>
-        <option value="Sweden">Sweden</option>
-        <option value="Norway">Norway</option>
-        <option value="Switzerland">Switzerland</option>
-        <option value="Denmark">Denmark</option>
-        <option value="Belgium">Belgium</option>
-        <option value="Netherlands">Netherlands</option>
-        <option value="Finland">Finland</option>
-        <option value="Austria">Austria</option>
-        <option value="Cyprus">Cyprus</option>
-        <option value="Hungary">Hungary</option>
-    </select>
+        <select id="country">
+            <option value="">-- Select Country --</option>
+            <option value="Malaysia">Malaysia</option>
+            <option value="Saudi Arabia">Saudi Arabia</option>
+            <option value="UAE">UAE</option>
+            <option value="Qatar">Qatar</option>
+            <option value="Oman">Oman</option>
+            <option value="Singapore">Singapore</option>
+            <option value="Canada">Canada</option>
+            <option value="Italy">Italy</option>
+            <option value="Kuwait">Kuwait</option>
+            <option value="Bahrain">Bahrain</option>
+            <option value="USA">USA</option>
+            <option value="UK">UK</option>
+            <option value="Australia">Australia</option>
+            <option value="Germany">Germany</option>
+            <option value="France">France</option>
+            <option value="Portugal">Portugal</option>
+            <option value="Spain">Spain</option>
+            <option value="Maldives">Maldives</option>
+            <option value="South Korea">South Korea</option>
+            <option value="Japan">Japan</option>
+            <option value="Romania">Romania</option>
+            <option value="Malta">Malta</option>
+            <option value="Poland">Poland</option>
+            <option value="Croatia">Croatia</option>
+            <option value="Greece">Greece</option>
+            <option value="Turkey">Turkey</option>
+            <option value="Jordan">Jordan</option>
+            <option value="South Africa">South Africa</option>
+            <option value="New Zealand">New Zealand</option>
+            <option value="Ireland">Ireland</option>
+            <option value="Sweden">Sweden</option>
+            <option value="Norway">Norway</option>
+            <option value="Switzerland">Switzerland</option>
+            <option value="Denmark">Denmark</option>
+            <option value="Belgium">Belgium</option>
+            <option value="Netherlands">Netherlands</option>
+            <option value="Finland">Finland</option>
+            <option value="Austria">Austria</option>
+            <option value="Cyprus">Cyprus</option>
+            <option value="Hungary">Hungary</option>
+            <option value="Vietnam">Vietnam</option>
+            <option value="Thailand">Thailand</option>
+            <option value="Egypt">Egypt</option>
+            <option value="Brunei">Brunei</option>
+            <option value="Lebanon">Lebanon</option>
+            <option value="Mauritius">Mauritius</option>
+            <option value="Russia">Russia</option>
+            <option value="Brazil">Brazil</option>
+            <option value="Mexico">Mexico</option>
+            <option value="Czech Republic">Czech Republic</option>
+        </select>
 
-    <input type="text" id="permitID" placeholder="Passport or Permit Number">
-    <button onclick="checkData()">CHECK NOW</button>
+        <input type="text" id="permitNumber" placeholder="Enter Passport / Permit Number">
+        
+        <button onclick="checkStatus()">CHECK STATUS</button>
 
-    <div id="result"></div>
-</div>
+        <div id="result"></div>
 
-<script>
-    function checkData() {
-        const country = document.getElementById('countrySelect').value;
-        const id = document.getElementById('permitID').value.trim();
-        const resultDiv = document.getElementById('result');
+        <div class="footer">
+            © 2026 Global Permit Verification System
+        </div>
+    </div>
 
-        if (!country || !id) {
-            alert("Please select a country and enter a number!");
-            return;
-        }
+    <script>
+        function checkStatus() {
+            const country = document.getElementById('country').value;
+            const number = document.getElementById('permitNumber').value.trim();
+            const resultBox = document.getElementById('result');
 
-        resultDiv.style.display = "block";
-        resultDiv.innerHTML = "Checking database...";
-        resultDiv.className = "";
-
-        setTimeout(() => {
-            // সিম্পল লজিক: আপনি এখানে আপনার ডাটাবেস বা নাম্বার সেট করতে পারেন
-            if (id === "12345") {
-                resultDiv.className = "success";
-                resultDiv.innerHTML = `<strong>Status: APPROVED</strong><br>Country: ${country}<br>Your permit is verified.`;
-            } else {
-                resultDiv.className = "error";
-                resultDiv.innerHTML = `<strong>Status: NOT FOUND</strong><br>No data for ${country} with this ID.`;
+            if (country === "" || number === "") {
+                alert("Please select a country and enter a valid number!");
+                return;
             }
-        }, 1000);
-    }
-</script>
 
+            // লোডিং ইফেক্ট
+            resultBox.style.display = "block";
+            resultBox.className = "";
+            resultBox.innerHTML = "Searching in " + country + " database...";
+
+            setTimeout(() => {
+                // এখানে আপনার রেজাল্ট লজিক (উদাহরণস্বরূপ ১০০০১ দিলে অ্যাপ্রুভ দেখাবে)
+                if (number === "10001" || number === "786") {
+                    resultBox.className = "success";
+                    resultBox.innerHTML = "<strong>Status: APPROVED!</strong><br>Country: " + country + "<br>Your permit is verified and ready.";
+                } else {
+                    resultBox.className = "error";
+                    resultBox.innerHTML = "<strong>Status: NOT FOUND!</strong><br>We couldn't find any data for " + number + " in " + country + ".";
+                }
+            }, 1500);
+        }
+    </script>
 </body>
 </html>
