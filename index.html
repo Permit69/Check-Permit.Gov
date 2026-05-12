@@ -9,7 +9,6 @@
         header { background-color: #7e5109; padding: 20px; font-size: 24px; font-weight: bold; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
         .main-title { padding: 30px; font-size: 20px; text-transform: uppercase; font-weight: bold; }
 
-        /* Country Grid */
         .country-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -30,10 +29,9 @@
         }
 
         .country-card:hover { transform: translateY(-5px); background: #fff; box-shadow: 0 8px 15px rgba(0,0,0,0.2); }
-        .country-card img { width: 100%; height: 50px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd; }
-        .country-card p { margin: 8px 0 0; font-size: 11px; font-weight: bold; text-transform: uppercase; }
+        .country-card img { width: 100%; height: 55px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd; }
+        .country-card p { margin: 8px 0 0; font-size: 10px; font-weight: bold; text-transform: uppercase; }
 
-        /* Verification Popup */
         #verify-section {
             display: none;
             background: white;
@@ -60,8 +58,7 @@
     <header>🌐 GLOBAL PERMIT VERIFICATION</header>
     <div class="main-title">Select Country to Verify Your Work Permit</div>
 
-    <div class="country-grid" id="grid">
-        </div>
+    <div class="country-grid" id="grid"></div>
 
     <div class="overlay" id="overlay" onclick="closePopup()"></div>
     <div id="verify-section">
@@ -73,39 +70,37 @@
     </div>
 
     <script>
-        // 100+ Countries Data
         const countries = [
             {n: "USA", c: "us"}, {n: "Canada", c: "ca"}, {n: "UK", c: "gb"}, {n: "Australia", c: "au"},
-            {n: "Germany", c: "de"}, {n: "France", c: "fr"}, {n: "Italy", c: "it"}, {n: "Spain", c: "es"},
-            {n: "Portugal", c: "pt"}, {n: "Romania", c: "ro"}, {n: "Poland", c: "pl"}, {n: "Malta", c: "mt"},
-            {n: "Cyprus", c: "cy"}, {n: "Greece", c: "gr"}, {n: "Croatia", c: "hr"}, {n: "Hungary", c: "hu"},
-            {n: "Malaysia", c: "my"}, {n: "Singapore", c: "sg"}, {n: "Saudi Arabia", c: "sa"}, {n: "UAE", c: "ae"},
-            {n: "Qatar", c: "qa"}, {n: "Oman", c: "om"}, {n: "Kuwait", c: "kw"}, {n: "Bahrain", c: "bh"},
-            {n: "South Korea", c: "kr"}, {n: "Japan", c: "jp"}, {n: "Maldives", c: "mv"}, {n: "Thailand", c: "th"},
-            {n: "Vietnam", c: "vn"}, {n: "Brunei", c: "bn"}, {n: "Russia", c: "ru"}, {n: "Turkey", c: "tr"},
-            {n: "Jordan", c: "jo"}, {n: "Lebanon", c: "lb"}, {n: "Egypt", c: "eg"}, {n: "South Africa", c: "za"},
+            {n: "Serbia", c: "rs"}, {n: "Portugal", c: "pt"}, {n: "Germany", c: "de"}, {n: "France", c: "fr"},
+            {n: "Italy", c: "it"}, {n: "Spain", c: "es"}, {n: "Romania", c: "ro"}, {n: "Poland", c: "pl"},
+            {n: "Malta", c: "mt"}, {n: "Cyprus", c: "cy"}, {n: "Greece", c: "gr"}, {n: "Croatia", c: "hr"},
+            {n: "Hungary", c: "hu"}, {n: "Malaysia", c: "my"}, {n: "Singapore", c: "sg"}, {n: "Saudi Arabia", c: "sa"},
+            {n: "UAE", c: "ae"}, {n: "Qatar", c: "qa"}, {n: "Oman", c: "om"}, {n: "Kuwait", c: "kw"},
+            {n: "Bahrain", c: "bh"}, {n: "South Korea", c: "kr"}, {n: "Japan", c: "jp"}, {n: "Maldives", c: "mv"},
+            {n: "Thailand", c: "th"}, {n: "Vietnam", c: "vn"}, {n: "Brunei", c: "bn"}, {n: "Russia", c: "ru"},
+            {n: "Turkey", c: "tr"}, {n: "Jordan", c: "jo"}, {n: "Egypt", c: "eg"}, {n: "South Africa", c: "za"},
             {n: "Mauritius", c: "mu"}, {n: "New Zealand", c: "nz"}, {n: "Ireland", c: "ie"}, {n: "Switzerland", c: "ch"},
             {n: "Sweden", c: "se"}, {n: "Norway", c: "no"}, {n: "Finland", c: "fi"}, {n: "Denmark", c: "dk"},
             {n: "Belgium", c: "be"}, {n: "Netherlands", c: "nl"}, {n: "Austria", c: "at"}, {n: "Czechia", c: "cz"},
             {n: "Slovakia", c: "sk"}, {n: "Slovenia", c: "si"}, {n: "Bulgaria", c: "bg"}, {n: "Lithuania", c: "lt"},
             {n: "Latvia", c: "lv"}, {n: "Estonia", c: "ee"}, {n: "Luxembourg", c: "lu"}, {n: "Iceland", c: "is"},
-            {n: "Brazil", c: "br"}, {n: "Argentina", c: "ar"}, {n: "Chile", c: "cl"}, {n: "Mexico", c: "mx"},
-            {n: "Panama", c: "pa"}, {n: "Israel", c: "il"}, {n: "Azerbaijan", c: "az"}, {n: "Georgia", c: "ge"},
-            {n: "Kazakhstan", c: "kz"}, {n: "Uzbekistan", c: "uz"}, {n: "Philippines", c: "ph"}, {n: "Indonesia", c: "id"},
-            {n: "Sri Lanka", c: "lk"}, {n: "Bangladesh", c: "bd"}, {n: "India", c: "in"}, {n: "Pakistan", c: "pk"},
-            {n: "Nepal", c: "np"}, {n: "Bhutan", c: "bt"}, {n: "Cambodia", c: "kh"}, {n: "Laos", c: "la"},
-            {n: "Mongolia", c: "mn"}, {n: "Morocco", c: "ma"}, {n: "Algeria", c: "dz"}, {n: "Tunisia", c: "tn"},
-            {n: "Kenya", c: "ke"}, {n: "Nigeria", c: "ng"}, {n: "Ghana", c: "gh"}, {n: "Ethiopia", c: "et"},
-            {n: "Uganda", c: "ug"}, {n: "Tanzania", c: "tz"}, {n: "Seychelles", c: "sc"}, {n: "Fiji", c: "fj"},
-            {n: "Samoa", c: "ws"}, {n: "Vanuatu", c: "vu"}, {n: "Bahamas", c: "bs"}, {n: "Jamaica", c: "jm"},
-            {n: "Barbados", c: "bb"}, {n: "Cuba", c: "cu"}, {n: "Peru", c: "pe"}, {n: "Colombia", c: "co"},
-            {n: "Uruguay", c: "uy"}, {n: "Paraguay", c: "py"}, {n: "Bolivia", c: "bo"}, {n: "Ecuador", c: "ec"}
+            {n: "Brazil", c: "br"}, {n: "Argentina", c: "ar"}, {n: "Mexico", c: "mx"}, {n: "Israel", c: "il"},
+            {n: "Philippines", c: "ph"}, {n: "Indonesia", c: "id"}, {n: "Bangladesh", c: "bd"}, {n: "India", c: "in"},
+            {n: "Pakistan", c: "pk"}, {n: "Nepal", c: "np"}, {n: "Sri Lanka", c: "lk"}, {n: "Albania", c: "al"},
+            {n: "Armenia", c: "am"}, {n: "Georgia", c: "ge"}, {n: "Kazakhstan", c: "kz"}, {n: "Moldova", c: "md"},
+            {n: "Montenegro", c: "me"}, {n: "North Macedonia", c: "mk"}, {n: "Ukraine", c: "ua"}, {n: "Uzbekistan", c: "uz"},
+            {n: "Azerbaijan", c: "az"}, {n: "Belarus", c: "by"}, {n: "Bosnia", c: "ba"}, {n: "Andorra", c: "ad"},
+            {n: "Monaco", c: "mc"}, {n: "San Marino", c: "sm"}, {n: "Liechtenstein", c: "li"}, {n: "Kosovo", c: "xk"},
+            {n: "Lebanon", c: "lb"}, {n: "Iraq", c: "iq"}, {n: "Morocco", c: "ma"}, {n: "Tunisia", c: "tn"},
+            {n: "Algeria", c: "dz"}, {n: "Libya", c: "ly"}, {n: "Nigeria", c: "ng"}, {n: "Kenya", c: "ke"},
+            {n: "Ghana", c: "gh"}, {n: "Ethiopia", c: "et"}, {n: "Uganda", c: "ug"}, {n: "Tanzania", c: "tz"},
+            {n: "Seychelles", c: "sc"}, {n: "Fiji", c: "fj"}, {n: "Samoa", c: "ws"}, {n: "Vanuatu", c: "vu"}
         ];
 
         const grid = document.getElementById('grid');
         let selectedCountry = "";
 
-        // Generate Cards
         countries.sort((a, b) => a.n.localeCompare(b.n)).forEach(country => {
             const card = document.createElement('div');
             card.className = 'country-card';
@@ -130,11 +125,9 @@
         function checkCode() {
             const code = document.getElementById('permitCode').value.trim();
             
-            // PDF LOGIC: এখানে আপনার আপলোড করা PDF এর লিঙ্কগুলো বসাবেন
+            // আপনার PDF লিঙ্কগুলো এখানে বসাবেন
             if(code === "123456") {
                 window.open("https://your-pdf-link-here.com/file.pdf", "_blank"); 
-            } else if(code === "786786") {
-                window.open("https://another-link.com/file.pdf", "_blank");
             } else {
                 alert("Status: NOT FOUND! Please check your code.");
             }
