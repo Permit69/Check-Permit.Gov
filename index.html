@@ -136,6 +136,9 @@
         function checkCode() {
     const code = document.getElementById('permitCode').value.trim();
     // PDF links logic
+            if(code === "AYU89") {
+        window.open("SUMON.pdf", "_blank");
+    }
     if(code === "AD67") {
         window.open("MINTU.pdf", "_blank");
     } else {
