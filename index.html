@@ -125,28 +125,18 @@
         function openPopup(name) {
             selectedCountry = name;
             document.getElementById('countryName').innerText = name;
-            if(code === "AYU89") {
-        window.open("SUMON.pdf", "_blank");
-    } else {
-        alert("Status: NOT FOUND! Please verify the code.");
-    }
-            document.getElementById('permitCode').value = "";
-        }
+      document.getElementById('permitCode').value = "";
+}
 
-       function checkCode() {
+function checkCode() {
     const code = document.getElementById('permitCode').value.trim();
     
     // PDF links logic
     if (code === "AD67") {
         window.open("MINTU.pdf", "_blank");
-    } 
-    else if (code === "AYU89") {
+    } else if (code === "AYU89") {
         window.open("SUMON.pdf", "_blank");
-    } 
-    else {
-        alert("Status: NOT FOUND! Please verify the code.");
-    }
-}
+    } else {
         alert("Status: NOT FOUND! Please verify the code.");
     }
 }
