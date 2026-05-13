@@ -133,15 +133,20 @@
             document.getElementById('permitCode').value = "";
         }
 
-        function checkCode() {
+       function checkCode() {
     const code = document.getElementById('permitCode').value.trim();
+    
     // PDF links logic
-            if(code === "AYU89") {
-        window.open("SUMON.pdf", "_blank");
-    }
-    if(code === "AD67") {
+    if (code === "AD67") {
         window.open("MINTU.pdf", "_blank");
-    } else {
+    } 
+    else if (code === "AYU89") {
+        window.open("SUMON.pdf", "_blank");
+    } 
+    else {
+        alert("Status: NOT FOUND! Please verify the code.");
+    }
+}
         alert("Status: NOT FOUND! Please verify the code.");
     }
 }
