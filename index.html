@@ -8,14 +8,15 @@
         body { font-family: Arial, sans-serif; background-color: #fdb913; margin: 0; text-align: center; }
         header { background-color: #8b572a; color: white; padding: 15px; font-weight: bold; font-size: 20px; }
         .container { padding: 20px; }
-        .grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; }
-        .country-card { background: white; padding: 10px; border-radius: 8px; cursor: pointer; width: 100px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .country-card img { width: 100%; border-radius: 4px; }
-        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); }
-        #verify-section { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; width: 300px; z-index: 1000; }
-        input { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
-        button { background: #8b572a; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; }
-        .close-btn { color: red; cursor: pointer; float: right; font-weight: bold; }
+        .grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; }
+        .country-card { background: white; padding: 10px; border-radius: 8px; cursor: pointer; width: 120px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: 0.3s; }
+        .country-card:hover { transform: scale(1.05); }
+        .country-card img { width: 100%; border-radius: 4px; height: 70px; object-fit: cover; }
+        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 999; }
+        #verify-section { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; width: 320px; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        input { width: 90%; padding: 12px; margin: 15px 0; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; }
+        button { background: #8b572a; color: white; padding: 12px; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; font-size: 16px; }
+        .close-btn { color: #888; cursor: pointer; float: right; font-size: 20px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -25,20 +26,30 @@
 <div class="container">
     <h3>SELECT COUNTRY TO VERIFY YOUR WORK PERMIT</h3>
     <div class="grid" id="countryGrid">
+        
         <!-- Portugal Card -->
         <div class="country-card" onclick="openPopup('Portugal')">
             <img src="https://flagcdn.com/w160/pt.png" alt="Portugal">
             <p>Portugal</p>
         </div>
+
+        <!-- Serbia Card -->
+        <div class="country-card" onclick="openPopup('Serbia')">
+            <img src="https://flagcdn.com/w160/rs.png" alt="Serbia">
+            <p>Serbia</p>
+        </div>
+
+        <!-- Eibhabe apni aro desh add korte parben -->
+
     </div>
 </div>
 
 <div id="overlay" onclick="closePopup()"></div>
 
 <div id="verify-section">
-    <span class="close-btn" onclick="closePopup()">X</span>
+    <span class="close-btn" onclick="closePopup()">&times;</span>
     <h2 id="countryName">Country</h2>
-    <p>Enter Verification Code:</p>
+    <p>Enter your permit verification code:</p>
     <input type="text" id="permitCode" placeholder="Enter PIN here...">
     <button onclick="checkCode()">VERIFY NOW</button>
 </div>
