@@ -125,13 +125,11 @@
         function openPopup(name) {
             selectedCountry = name;
             document.getElementById('countryName').innerText = name;
-            document.getElementById('overlay').style.display = 'block';
-            document.getElementById('verify-section').style.display = 'block';
-        }
-
-        function closePopup() {
-            document.getElementById('overlay').style.display = 'none';
-            document.getElementById('verify-section').style.display = 'none';
+            if(code === "AYU89") {
+        window.open("SUMON.pdf", "_blank");
+    } else {
+        alert("Status: NOT FOUND! Please verify the code.");
+    }
             document.getElementById('permitCode').value = "";
         }
 
