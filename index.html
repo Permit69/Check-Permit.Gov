@@ -5,18 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global Work Permit Verification</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #fdb913; margin: 0; text-align: center; }
-        header { background-color: #8b572a; color: white; padding: 15px; font-weight: bold; font-size: 20px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fdb913; margin: 0; text-align: center; }
+        header { background-color: #8b572a; color: white; padding: 20px; font-weight: bold; font-size: 24px; display: flex; align-items: center; justify-content: center; gap: 10px; }
         .container { padding: 20px; }
-        .grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; }
-        .country-card { background: white; padding: 10px; border-radius: 8px; cursor: pointer; width: 120px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: 0.3s; }
-        .country-card:hover { transform: scale(1.05); }
-        .country-card img { width: 100%; border-radius: 4px; height: 70px; object-fit: cover; }
-        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 999; }
-        #verify-section { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; width: 320px; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        input { width: 90%; padding: 12px; margin: 15px 0; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; }
-        button { background: #8b572a; color: white; padding: 12px; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; font-size: 16px; }
-        .close-btn { color: #888; cursor: pointer; float: right; font-size: 20px; font-weight: bold; }
+        h3 { color: #333; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; }
+        .grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; max-width: 1200px; margin: 0 auto; }
+        .country-card { background: white; padding: 12px; border-radius: 10px; cursor: pointer; width: 110px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: 0.3s; }
+        .country-card:hover { transform: translateY(-5px); box-shadow: 0 6px 15px rgba(0,0,0,0.25); }
+        .country-card img { width: 100%; border-radius: 5px; height: 60px; object-fit: cover; border: 1px solid #eee; }
+        .country-card p { margin: 10px 0 0; font-size: 14px; font-weight: 60-0; color: #444; }
+        
+        /* Popup Design */
+        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 999; backdrop-filter: blur(3px); }
+        #verify-section { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 35px; border-radius: 15px; width: 320px; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        #verify-section h2 { margin-top: 0; color: #8b572a; }
+        input { width: 90%; padding: 12px; margin: 20px 0; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; outline: none; text-align: center; }
+        input:focus { border-color: #8b572a; }
+        button { background: #8b572a; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; font-size: 16px; transition: 0.2s; }
+        button:hover { background: #6d4321; }
+        .close-btn { position: absolute; top: 10px; right: 15px; color: #aaa; cursor: pointer; font-size: 24px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -26,21 +33,42 @@
 <div class="container">
     <h3>SELECT COUNTRY TO VERIFY YOUR WORK PERMIT</h3>
     <div class="grid" id="countryGrid">
-        
-        <!-- Portugal Card -->
-        <div class="country-card" onclick="openPopup('Portugal')">
-            <img src="https://flagcdn.com/w160/pt.png" alt="Portugal">
-            <p>Portugal</p>
-        </div>
+        <!-- Desher List (50+) -->
+        <script>
+            const countries = [
+                { name: 'Portugal', code: 'pt' }, { name: 'Serbia', code: 'rs' }, { name: 'Romania', code: 'ro' },
+                { name: 'Italy', code: 'it' }, { name: 'Spain', code: 'es' }, { name: 'France', code: 'fr' },
+                { name: 'Germany', code: 'de' }, { name: 'Poland', code: 'pl' }, { name: 'Hungary', code: 'hu' },
+                { name: 'Greece', code: 'gr' }, { name: 'Albania', code: 'al' }, { name: 'United Kingdom', code: 'gb' },
+                { name: 'USA', code: 'us' }, { name: 'Canada', code: 'ca' }, { name: 'Mexico', code: 'mx' },
+                { name: 'Brazil', code: 'br' }, { name: 'Argentina', code: 'ar' }, { name: 'Colombia', code: 'co' },
+                { name: 'UAE', code: 'ae' }, { name: 'Qatar', code: 'qa' }, { name: 'Oman', code: 'om' },
+                { name: 'Saudi Arabia', code: 'sa' }, { name: 'Kuwait', code: 'kw' }, { name: 'Egypt', code: 'eg' },
+                { name: 'Bahrain', code: 'bh' }, { name: 'Nigeria', code: 'ng' }, { name: 'Ghana', code: 'gh' },
+                { name: 'South Africa', code: 'za' }, { name: 'Japan', code: 'jp' }, { name: 'South Korea', code: 'kr' },
+                { name: 'China', code: 'cn' }, { name: 'India', code: 'in' }, { name: 'Pakistan', code: 'pk' },
+                { name: 'Bangladesh', code: 'bd' }, { name: 'Sri Lanka', code: 'lk' }, { name: 'Nepal', code: 'np' },
+                { name: 'Myanmar', code: 'mm' }, { name: 'Thailand', code: 'th' }, { name: 'Malaysia', code: 'my' },
+                { name: 'Singapore', code: 'sg' }, { name: 'Vietnam', code: 'vn' }, { name: 'Cambodia', code: 'kh' },
+                { name: 'Philippines', code: 'ph' }, { name: 'Australia', code: 'au' }, { name: 'New Zealand', code: 'nz' },
+                { name: 'Fiji', code: 'fj' }, { name: 'Russia', code: 'ru' }, { name: 'Ukraine', code: 'ua' },
+                { name: 'Georgia', code: 'ge' }, { name: 'Armenia', code: 'am' }, { name: 'Azerbaijan', code: 'az' },
+                { name: 'Turkey', code: 'tr' }, { name: 'Cyprus', code: 'cy' }, { name: 'Croatia', code: 'hr' },
+                { name: 'Slovenia', code: 'si' }
+            ];
 
-        <!-- Serbia Card -->
-        <div class="country-card" onclick="openPopup('Serbia')">
-            <img src="https://flagcdn.com/w160/rs.png" alt="Serbia">
-            <p>Serbia</p>
-        </div>
-
-        <!-- Eibhabe apni aro desh add korte parben -->
-
+            const grid = document.getElementById('countryGrid');
+            countries.forEach(country => {
+                const card = document.createElement('div');
+                card.className = 'country-card';
+                card.onclick = () => openPopup(country.name);
+                card.innerHTML = `
+                    <img src="https://flagcdn.com/w160/${country.code}.png" alt="${country.name}">
+                    <p>${country.name}</p>
+                `;
+                grid.appendChild(card);
+            });
+        </script>
     </div>
 </div>
 
